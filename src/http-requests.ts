@@ -1,3 +1,4 @@
+import JSONBigInt from "json-bigint-native";
 import { Config, EnqueuedTaskObject } from "./types";
 import { PACKAGE_VERSION } from "./package-version";
 
@@ -135,7 +136,7 @@ class HttpRequests {
     // in case a custom content-type is provided
     // do not stringify body
     if (!config.headers?.["Content-Type"]) {
-      body = JSON.stringify(body);
+      body = JSONBigInt.stringify(body);
     }
 
     const headers = { ...this.headers, ...config.headers };
@@ -162,7 +163,7 @@ class HttpRequests {
 
     const responseBody = await response.text();
     const parsedResponse =
-      responseBody === "" ? undefined : JSON.parse(responseBody);
+      responseBody === "" ? undefined : JSONBigInt.parse(responseBody);
 
     if (!response.ok) {
       throw new MeiliSearchApiError(response, parsedResponse);
